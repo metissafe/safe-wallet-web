@@ -4,7 +4,7 @@ import bowser from 'bowser'
 import packageJson from '../../../package.json'
 import { IS_PRODUCTION } from '@/config/constants'
 import ExternalStore from '@/services/ExternalStore'
-import PairingIcon from '@/public/images/safe-logo-green.png'
+import PairingIcon from '@/public/images/safe-logo-blue.png'
 
 export const PAIRING_MODULE_STORAGE_ID = 'pairingConnector'
 
@@ -12,7 +12,7 @@ export const getClientMeta = () => {
   const host = location.origin
 
   const APP_META = {
-    name: `Safe{Wallet} web v${packageJson.version}`,
+    name: `MetisSafe web v${packageJson.version}`,
     url: host,
     icons: [`${host}${PairingIcon.src}`],
   }

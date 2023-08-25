@@ -84,7 +84,7 @@ describe('useChainId hook', () => {
 
   it('should return the default chainId if no query params', () => {
     const { result } = renderHook(() => useChainId())
-    expect(result.current).toBe('5')
+    expect(result.current).toBe('599')
   })
 
   it('should return the chainId based on the chain query', () => {
@@ -146,7 +146,7 @@ describe('useChainId hook', () => {
     }))
 
     const { result } = renderHook(() => useChainId())
-    expect(result.current).toBe('5')
+    expect(result.current).toBe('599')
   })
 
   it('should return the last used chain id if no wallet is connected and there is no chain in the URL', () => {

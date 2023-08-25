@@ -49,10 +49,10 @@ export const createOnboard = (
     },
 
     appMetadata: {
-      name: 'Safe{Wallet}',
+      name: 'MetisSafe',
       // Both heights need be set to correctly size the image in the connecting screen/modal
-      icon: '<svg height="100%"><image href="/images/safe-logo-green.png" height="100%" /></svg>',
-      description: 'Please select a wallet to connect to Safe{Wallet}',
+      icon: '<svg height="100%"><image href="/images/safe-logo-blue.png" height="100%" /></svg>',
+      description: 'Please select a wallet to connect to MetisSafe',
       recommendedInjectedWallets: getRecommendedInjectedWallets(),
     },
 

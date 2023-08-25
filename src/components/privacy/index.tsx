@@ -149,7 +149,7 @@ const SafePrivacyPolicy = () => {
           &nbsp;released under LGPL-3.0.
         </li>
         <li>
-          &ldquo;{'Safe{Wallet}'}&rdquo; refers to a web-based graphical user interface for Safe Accounts as well as a
+          &ldquo;{'MetisSafe'}&rdquo; refers to a web-based graphical user interface for Safe Accounts as well as a
           mobile application on Android and iOS.
         </li>
         <li>
@@ -194,9 +194,9 @@ const SafePrivacyPolicy = () => {
         BLOCKCHAIN WILL BECOME PUBLICLY AVAILABLE
       </p>
       <h3 id="4">4. How We Use Personal Data</h3>
-      <h4>4.1. When visiting our website and using {'Safe{Wallet}'}</h4>
+      <h4>4.1. When visiting our website and using {'MetisSafe'}</h4>
       <p>
-        When visiting our website or using {'Safe{Wallet}'}, we may collect and process personal data. The data will be
+        When visiting our website or using {'MetisSafe'}, we may collect and process personal data. The data will be
         stored in different instances
       </p>
       <ol start={1} className={css.alphaList}>
@@ -235,7 +235,7 @@ const SafePrivacyPolicy = () => {
       <ol start={4} className={css.alphaList}>
         <li>
           When you create a Profile for an existing Safe Account for the purpose of allowing you to view and use them in
-          the {'Safe{Wallet}'}, we process your
+          the {'MetisSafe'}, we process your
           <ol start={1} className={css.romanList}>
             <li>public Wallet address, </li>
             <li>Safe Account balance, </li>
@@ -280,7 +280,7 @@ const SafePrivacyPolicy = () => {
       <ol start={8} className={css.alphaList}>
         <li>
           When we collect relevant&nbsp;data&nbsp;from the Blockchain to display context information in the
-          {`Safe{Wallet}`}
+          {`MetisSafe`}
           we process:
           <ol start={1} className={css.romanList}>
             <li>your public Wallet address, </li>
@@ -372,9 +372,8 @@ const SafePrivacyPolicy = () => {
         <li>range of managed funds</li>
       </ol>
       <p>
-        In addition, we may take a recording of you while testing {'Safe{Wallet}'} for internal and external use. The
-        basis for this collection and processing is our legitimate business interest in monitoring and improving our
-        services.
+        In addition, we may take a recording of you while testing {'MetisSafe'} for internal and external use. The basis
+        for this collection and processing is our legitimate business interest in monitoring and improving our services.
       </p>
       <p>
         The lawful basis for this processing is your consent as provided before participating in user experience
@@ -540,7 +539,7 @@ const SafePrivacyPolicy = () => {
       </p>
       <h4>5.4. Mobile app stores</h4>
       <p>
-        {'Safe{Wallet}'} mobile apps are distributed via{' '}
+        {'MetisSafe'} mobile apps are distributed via{' '}
         <Link href="https://www.apple.com/app-store/" passHref>
           <MUILink target="_blank" rel="noreferrer">
             Apple AppStore
@@ -558,10 +557,10 @@ const SafePrivacyPolicy = () => {
       </p>
       <h4>5.5. Fingerprint/Touch ID/ Face ID</h4>
       <p>
-        We enable the user to unlock the {'Safe{Wallet}'} mobile app via biometrics information (touch ID or face ID).
-        This is a feature of the operating system. We do not store any of this data. Instead, the API of the operating
-        system is used to validate the user input. If you have any further questions you should consult with your
-        preferred mobile device provider or manufacturer.
+        We enable the user to unlock the {'MetisSafe'} mobile app via biometrics information (touch ID or face ID). This
+        is a feature of the operating system. We do not store any of this data. Instead, the API of the operating system
+        is used to validate the user input. If you have any further questions you should consult with your preferred
+        mobile device provider or manufacturer.
       </p>
       <h4>5.6. Google Firebase</h4>
       <p>
