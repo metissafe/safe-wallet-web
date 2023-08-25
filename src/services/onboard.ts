@@ -49,9 +49,10 @@ export const createOnboard = (
     },
 
     appMetadata: {
-      name: 'Safe{Wallet}',
-      icon: location.origin + '/images/logo-round.svg',
-      description: 'Safe{Wallet} – smart contract wallet for Ethereum (ex-Gnosis Safe multisig)',
+      name: 'MetisSafe',
+      // Both heights need be set to correctly size the image in the connecting screen/modal
+      icon: '<svg height="100%"><image href="/images/safe-logo-blue.png" height="100%" /></svg>',
+      description: 'Please select a wallet to connect to MetisSafe',
       recommendedInjectedWallets: getRecommendedInjectedWallets(),
     },
 
