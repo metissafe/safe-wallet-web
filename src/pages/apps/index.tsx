@@ -23,14 +23,14 @@ const SafeApps: NextPage = () => {
   useEffect(() => {
     const appUrl = router.query.appUrl as string
     if (appUrl) {
-      router.push(AppRoutes.apps.open, { query: { safe: router.query.safe, appUrl } })
+      router.push({ pathname: AppRoutes.apps.open, query: { safe: router.query.safe, appUrl } })
     }
   }, [router])
 
   return (
     <>
       <Head>
-        <title>{'Safe{Wallet} – Safe Apps'}</title>
+        <title>{'MetisSafe – Safe Apps'}</title>
       </Head>
 
       <SafeAppsSDKLink />

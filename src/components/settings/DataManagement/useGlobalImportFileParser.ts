@@ -16,7 +16,7 @@ export const enum SAFE_EXPORT_VERSION {
 }
 
 export enum ImportErrors {
-  INVALID_VERSION = 'The file is not a Safe{Wallet} export.',
+  INVALID_VERSION = 'The file is not a MetisSafe export.',
   INVALID_JSON_FORMAT = 'The JSON format is invalid.',
   NO_IMPORT_DATA_FOUND = 'This file contains no importable data.',
 }
@@ -92,7 +92,7 @@ export const useGlobalImportJsonParser = (jsonData: string | undefined): Data =>
     try {
       parsedFile = JSON.parse(jsonData)
     } catch (err) {
-      logError(ErrorCodes._704, (err as Error).message)
+      logError(ErrorCodes._704, err)
 
       data.error = ImportErrors.INVALID_JSON_FORMAT
       return data

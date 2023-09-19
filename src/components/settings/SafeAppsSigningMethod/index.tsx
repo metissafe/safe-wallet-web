@@ -3,6 +3,7 @@ import { SETTINGS_EVENTS, trackEvent } from '@/services/analytics'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { selectOnChainSigning, setOnChainSigning } from '@/store/settingsSlice'
 import { FormControlLabel, Checkbox, Paper, Typography, FormGroup, Grid } from '@mui/material'
+import { HelpCenterArticle } from '@/config/constants'
 
 export const SafeAppsSigningMethod = () => {
   const onChainSigning = useAppSelector(selectOnChainSigning)
@@ -25,12 +26,9 @@ export const SafeAppsSigningMethod = () => {
 
         <Grid item xs>
           <Typography mb={2}>
-            This setting determines how the {'Safe{Wallet}'} will sign message requests from Safe Apps. Gasless,
-            off-chain signing is used by default. Learn more about message signing{' '}
-            <ExternalLink href="https://help.safe.global/en/articles/7021891-what-are-signed-messages">
-              here
-            </ExternalLink>
-            .
+            This setting determines how the {'MetisSafe'} will sign message requests from Safe Apps. Gasless, off-chain
+            signing is used by default. Learn more about message signing{' '}
+            <ExternalLink href={HelpCenterArticle.SIGNED_MESSAGES}>here</ExternalLink>.
           </Typography>
           <FormGroup>
             <FormControlLabel

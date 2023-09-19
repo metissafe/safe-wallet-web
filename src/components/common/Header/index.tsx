@@ -11,15 +11,16 @@ import SafeTokenWidget, { getSafeTokenAddress } from '@/components/common/SafeTo
 import NotificationCenter from '@/components/notification-center/NotificationCenter'
 import { AppRoutes } from '@/config/routes'
 import useChainId from '@/hooks/useChainId'
-import SafeLogo from '@/public/images/logo.svg'
 import Link from 'next/link'
 import useSafeAddress from '@/hooks/useSafeAddress'
+import BatchIndicator from '@/components/batch/BatchIndicator'
 
 type HeaderProps = {
   onMenuToggle?: Dispatch<SetStateAction<boolean>>
+  onBatchToggle?: Dispatch<SetStateAction<boolean>>
 }
 
-const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
+const Header = ({ onMenuToggle, onBatchToggle }: HeaderProps): ReactElement => {
   const chainId = useChainId()
   const safeAddress = useSafeAddress()
   const showSafeToken = safeAddress && !!getSafeTokenAddress(chainId)
@@ -36,6 +37,12 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
     }
   }
 
+  const handleBatchToggle = () => {
+    if (onBatchToggle) {
+      onBatchToggle((isOpen) => !isOpen)
+    }
+  }
+
   return (
     <Paper className={css.container}>
       <div className={classnames(css.element, css.menuButton, !onMenuToggle ? css.hideSidebarMobile : null)}>
@@ -47,7 +54,7 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
       <div className={classnames(css.element, css.hideMobile, css.logo)}>
         <Link href={logoHref} passHref>
           <a>
-            <SafeLogo alt="Safe logo" />
+            <img src="/images/logo.png" alt="MetisSafe logo" width={150} height={45} />
           </a>
         </Link>
       </div>
@@ -59,6 +66,10 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
       )}
 
       <div className={classnames(css.element, css.hideMobile)}>
+        <BatchIndicator onClick={handleBatchToggle} />
+      </div>
+
+      <div className={css.element}>
         <NotificationCenter />
       </div>
 

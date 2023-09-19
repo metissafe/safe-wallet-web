@@ -6,7 +6,7 @@ const SafePrivacyPolicy = () => {
   return (
     <div>
       <h1>Privacy Policy</h1>
-      <p>Last updated on May&nbsp;2023.</p>
+      <p>Last updated in August&nbsp;2023.</p>
       <p>
         Your privacy is important to us. It is our policy to respect your privacy and comply with any applicable law and
         regulation regarding any personal information we may collect about you, including across our website,{' '}
@@ -149,7 +149,7 @@ const SafePrivacyPolicy = () => {
           &nbsp;released under LGPL-3.0.
         </li>
         <li>
-          &ldquo;{'Safe{Wallet}'}&rdquo; refers to a web-based graphical user interface for Safe Accounts as well as a
+          &ldquo;{'MetisSafe'}&rdquo; refers to a web-based graphical user interface for Safe Accounts as well as a
           mobile application on Android and iOS.
         </li>
         <li>
@@ -194,9 +194,9 @@ const SafePrivacyPolicy = () => {
         BLOCKCHAIN WILL BECOME PUBLICLY AVAILABLE
       </p>
       <h3 id="4">4. How We Use Personal Data</h3>
-      <h4>4.1. When visiting our website and using {'Safe{Wallet}'}</h4>
+      <h4>4.1. When visiting our website and using {'MetisSafe'}</h4>
       <p>
-        When visiting our website or using {'Safe{Wallet}'}, we may collect and process personal data. The data will be
+        When visiting our website or using {'MetisSafe'}, we may collect and process personal data. The data will be
         stored in different instances
       </p>
       <ol start={1} className={css.alphaList}>
@@ -235,7 +235,7 @@ const SafePrivacyPolicy = () => {
       <ol start={4} className={css.alphaList}>
         <li>
           When you create a Profile for an existing Safe Account for the purpose of allowing you to view and use them in
-          the {'Safe{Wallet}'}, we process your
+          the {'MetisSafe'}, we process your
           <ol start={1} className={css.romanList}>
             <li>public Wallet address, </li>
             <li>Safe Account balance, </li>
@@ -280,7 +280,7 @@ const SafePrivacyPolicy = () => {
       <ol start={8} className={css.alphaList}>
         <li>
           When we collect relevant&nbsp;data&nbsp;from the Blockchain to display context information in the
-          {`Safe{Wallet}`}
+          {`MetisSafe`}
           we process:
           <ol start={1} className={css.romanList}>
             <li>your public Wallet address, </li>
@@ -329,7 +329,7 @@ const SafePrivacyPolicy = () => {
       <h4>4.2. Tracking</h4>
       <p>4.2.1 We may store the following personal data to analyze your behavior:</p>
       <ol start={1} className={css.romanList}>
-        <li>IP Address, </li>
+        <li>IP address (except for EU users), </li>
         <li>session tracking, </li>
         <li>user behavior, </li>
         <li>wallet type, </li>
@@ -340,7 +340,11 @@ const SafePrivacyPolicy = () => {
         <li>user behavior: subpage, duration, and revisit, the date and time of access,</li>
       </ol>
       <p>This data may be processed in order to improve the product and user experience.</p>
-      <p>The lawful basis for this processing is your consent (GDPR Art.6.1a) when agreeing to accept cookies.</p>
+      <p>
+        We may additionally store an analytics cookie on your device to identify you as a user and to track the app
+        usage across browsing sessions. The lawful basis for this processing is your consent (GDPR Art.6.1a) when
+        agreeing to accept cookies.
+      </p>
       <p>
         4.2.2 We conduct technical monitoring of your activity on the platform in order to ensure availability,
         integrity and robustness of the service. For this purpose we process your:
@@ -368,9 +372,8 @@ const SafePrivacyPolicy = () => {
         <li>range of managed funds</li>
       </ol>
       <p>
-        In addition, we may take a recording of you while testing {'Safe{Wallet}'} for internal and external use. The
-        basis for this collection and processing is our legitimate business interest in monitoring and improving our
-        services.
+        In addition, we may take a recording of you while testing {'MetisSafe'} for internal and external use. The basis
+        for this collection and processing is our legitimate business interest in monitoring and improving our services.
       </p>
       <p>
         The lawful basis for this processing is your consent as provided before participating in user experience
@@ -448,6 +451,50 @@ const SafePrivacyPolicy = () => {
         <li>Error info: Time, stacktrace</li>
       </ol>
       <p>We rely on our legitimate interest (GDPR Art.6.1f) of ensuring product quality. </p>
+      <p>
+        4.5.6 We process your personal data to allow you to authenticate using your gmail account or AppleID and to
+        create a signer wallet/owner account . For that purpose following personal data is processed:
+      </p>
+      <ol start={1} className={css.alphaList}>
+        <li>Anonymised device information and identifiers, e.g. IP address, cookie IDs, device type</li>
+        <li>User account authentication information (e.g. username, password)</li>
+        <li>
+          Unique user identifier (e.g. a random string associated with authentication, at times can be email. If so,
+          sensitive strings are processed but hashed and not stored)
+        </li>
+        <li>Connection and usage Information (e.g. logins to the application)</li>
+      </ol>
+      <p>
+        For this processing, we rely on our legitimate interest (GDPR Art.6.1f) of facilitating the onboarding for users
+        and ameliorating the user experience with regards to our product.
+      </p>
+      <p>
+        4.5.7 Providing on and off-ramp services to enable you to top up your Safe Account with e.g. bank transfer,
+        debit card, credit card. For this purpose MoonPay may process your:
+      </p>
+      <ol start={1} className={css.alphaList}>
+        <li>full name</li>
+        <li>date of birth</li>
+        <li>nationality</li>
+        <li>gender</li>
+        <li>signature</li>
+        <li>utility bills</li>
+        <li>photographs</li>
+        <li>phone number</li>
+        <li>home address</li>
+        <li>email</li>
+        <li>
+          information about the transactions you make via MoonPay services (e.g. name of the recipient, your name, the
+          amount, and/or timestamp)
+        </li>
+        <li>geo location/tracking details</li>
+        <li>operating system</li>
+        <li>personal IP address</li>
+      </ol>
+      <p>
+        To conduct this activity we rely on our legitimate interest (GDPR Art.6.1f) of ameliorating the onboarding
+        process and the user experience through providing an easier option to customers to fund their account.
+      </p>
       <h4>4.6 Other uses of your Personal Data</h4>
       <p>
         We may process any of your Personal Data where it is necessary to establish, exercise, or defend legal claims.
@@ -492,7 +539,7 @@ const SafePrivacyPolicy = () => {
       </p>
       <h4>5.4. Mobile app stores</h4>
       <p>
-        {'Safe{Wallet}'} mobile apps are distributed via{' '}
+        {'MetisSafe'} mobile apps are distributed via{' '}
         <Link href="https://www.apple.com/app-store/" passHref>
           <MUILink target="_blank" rel="noreferrer">
             Apple AppStore
@@ -510,10 +557,10 @@ const SafePrivacyPolicy = () => {
       </p>
       <h4>5.5. Fingerprint/Touch ID/ Face ID</h4>
       <p>
-        We enable the user to unlock the {'Safe{Wallet}'} mobile app via biometrics information (touch ID or face ID).
-        This is a feature of the operating system. We do not store any of this data. Instead, the API of the operating
-        system is used to validate the user input. If you have any further questions you should consult with your
-        preferred mobile device provider or manufacturer.
+        We enable the user to unlock the {'MetisSafe'} mobile app via biometrics information (touch ID or face ID). This
+        is a feature of the operating system. We do not store any of this data. Instead, the API of the operating system
+        is used to validate the user input. If you have any further questions you should consult with your preferred
+        mobile device provider or manufacturer.
       </p>
       <h4>5.6. Google Firebase</h4>
       <p>
@@ -632,6 +679,27 @@ const SafePrivacyPolicy = () => {
           </Link>
         </li>
       </ul>
+      <h4>5.13. Web3Auth</h4>
+      <p>
+        We use{' '}
+        <Link href="https://web3auth.io/" passHref>
+          <MUILink target="_blank" rel="noreferrer">
+            Web3Auth
+          </MUILink>
+        </Link>{' '}
+        to create a signer wallet/an owner account by using the user&apos;s Gmail account or Apple ID information.
+      </p>
+      <h4>5.14. MoonPay</h4>
+      <p>
+        We use{' '}
+        <Link href="https://www.moonpay.com/" passHref>
+          <MUILink target="_blank" rel="noreferrer">
+            MoonPay
+          </MUILink>
+        </Link>{' '}
+        to offer on-ramp and off-ramp services. For that purpose personal data is required for KYC/AML or other
+        financial regulatory requirements. This data is encrypted by MoonPay.
+      </p>
       <h3 id="6">6. Sharing Your Personal Data</h3>
       <p>
         We may pass your information to our Business Partners, administration centers, third party service providers,
@@ -668,6 +736,8 @@ const SafePrivacyPolicy = () => {
       <ul>
         <li>Tenderly d.o.o. is based in Serbia.</li>
         <li>Node Real PTE Ltd. is based in Singapore.</li>
+        <li>Torus Labs PTE. Ltd. is based in Singapore.</li>
+        <li>Eighteenth September Limited (“MoonPay”) in the Seychelles.</li>
       </ul>
       <p>
         HOWEVER, WHEN INTERACTING WITH THE BLOCKCHAIN, AS EXPLAINED ABOVE IN THIS POLICY, THE BLOCKCHAIN IS A GLOBAL
