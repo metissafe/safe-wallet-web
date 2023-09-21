@@ -53,9 +53,7 @@ const Header = ({ onMenuToggle, onBatchToggle }: HeaderProps): ReactElement => {
 
       <div className={classnames(css.element, css.hideMobile, css.logo)}>
         <Link href={logoHref} passHref>
-          <a>
-            <img src="/images/logo.png" alt="MetisSafe logo" width={150} height={45} />
-          </a>
+          <img src="/images/logo.png" alt="MetisSafe logo" width={150} height={45} />
         </Link>
       </div>
 
@@ -65,9 +63,11 @@ const Header = ({ onMenuToggle, onBatchToggle }: HeaderProps): ReactElement => {
         </div>
       )}
 
-      <div className={classnames(css.element, css.hideMobile)}>
-        <BatchIndicator onClick={handleBatchToggle} />
-      </div>
+      {safeAddress && (
+        <div className={classnames(css.element, css.hideMobile)}>
+          <BatchIndicator onClick={handleBatchToggle} />
+        </div>
+      )}
 
       <div className={css.element}>
         <NotificationCenter />
