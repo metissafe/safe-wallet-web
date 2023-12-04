@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: safeglobal/safe-wallet-web:staging
+          tags: metissafe/safe-wallet-web:staging
           platforms: |
             linux/amd64
             linux/arm64
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: safeglobal/safe-wallet-web:dev
+          tags: metissafe/safe-wallet-web:dev
           platforms: |
             linux/amd64
             linux/arm64
@@ -53,7 +53,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: safeglobal/safe-wallet-web:metis-dev
+          tags: metissafe/safe-wallet-web:metis-dev
           platforms: |
             linux/amd64
             linux/arm64
@@ -65,8 +65,8 @@ jobs:
         with:
           push: true
           tags: |
-            safeglobal/safe-wallet-web:${{ github.event.release.tag_name }}
-            safeglobal/safe-wallet-web:latest
+            metissafe/safe-wallet-web:${{ github.event.release.tag_name }}
+            metissafe/safe-wallet-web:latest
           platforms: |
             linux/amd64
             linux/arm64
