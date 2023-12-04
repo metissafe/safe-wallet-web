@@ -3,18 +3,19 @@
 name: Deploy to Dockerhub
 
 on:
+  pull_request:
+    branches:
+      - metis
   push:
     branches:
-      - main
-      - dev
-      - metis-dev
+      - metis
   release:
     types: [released]
 
 jobs:
   dockerhub-push:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/metis-dev' || (github.event_name == 'release' && github.event.action == 'released')
+    if: github.ref == 'refs/heads/metis' || (github.event_name == 'release' && github.event.action == 'released') || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -26,19 +27,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Deploy Main
-        if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: metissafe/safe-wallet-web:staging
-          platforms: |
-            linux/amd64
-            linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Deploy Develop
-        if: github.ref == 'refs/heads/dev'
+      - name: Deploy Dev
+        if: github.ref == 'refs/heads/metis'
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -48,12 +38,12 @@ jobs:
             linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Deploy Metis Develop
-        if: github.ref == 'refs/heads/metis-dev'
+      - name: Deploy PR Image
+        if: github.event_name == 'pull_request'
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: metissafe/safe-wallet-web:metis-dev
+          tags: metissafe/safe-wallet-web:pr-${{ github.event.number }}
           platforms: |
             linux/amd64
             linux/arm64
