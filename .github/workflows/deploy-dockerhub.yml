@@ -27,6 +27,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Add secrets to .env
+        run: |-
+          echo "NEXT_PUBLIC_SOCIAL_WALLET_OPTIONS_STAGING=${{ secrets.SOCIAL_WALLET_OPTIONS }}" >> .env &&
+          echo "NEXT_PUBLIC_SOCIAL_WALLET_OPTIONS_PRODUCTION=${{ secrets.SOCIAL_WALLET_OPTIONS }}" >> .env
       - name: Deploy Dev
         if: github.ref == 'refs/heads/metis'
         uses: docker/build-push-action@v5
