@@ -6,7 +6,6 @@ import * as owner from '../pages/owners.pages'
 describe('[SMOKE] Safe creation tests', () => {
   beforeEach(() => {
     cy.visit(constants.welcomeUrl + '?chain=sep')
-    main.waitForSafeListRequestToComplete()
     cy.clearLocalStorage()
     main.acceptCookies()
   })
@@ -21,7 +20,7 @@ describe('[SMOKE] Safe creation tests', () => {
   it('[SMOKE] Verify that a new Wallet has default name related to the selected network', () => {
     owner.waitForConnectionStatus()
     createwallet.clickOnCreateNewSafeBtn()
-    createwallet.verifyDefaultWalletName(createwallet.defaltSepoliaPlaceholder)
+    createwallet.verifyDefaultWalletName(createwallet.defaultSepoliaPlaceholder)
   })
 
   it('[SMOKE] Verify Add and Remove Owner Row works as expected', () => {

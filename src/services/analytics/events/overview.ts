@@ -27,12 +27,12 @@ export const OVERVIEW_EVENTS = {
     action: 'Add Safe',
     category: OVERVIEW_CATEGORY,
   },
-  SIDEBAR: {
-    action: 'Sidebar',
+  ADD_TO_WATCHLIST: {
+    action: 'Add to watchlist',
     category: OVERVIEW_CATEGORY,
   },
-  SIDEBAR_OPEN_SAFE: {
-    action: 'Sidebar open Safe',
+  SIDEBAR: {
+    action: 'Sidebar',
     category: OVERVIEW_CATEGORY,
   },
   TOTAL_ADDED_SAFES: {
@@ -51,6 +51,16 @@ export const OVERVIEW_EVENTS = {
   NEW_TRANSACTION: {
     action: 'New transaction',
     category: OVERVIEW_CATEGORY,
+  },
+  CHOOSE_TRANSACTION_TYPE: {
+    action: 'Choose transaction type',
+    category: OVERVIEW_CATEGORY,
+    event: EventType.CLICK,
+  },
+  ADD_FUNDS: {
+    action: 'Add funds',
+    category: OVERVIEW_CATEGORY,
+    event: EventType.CLICK,
   },
   NOTIFICATION_CENTER: {
     action: 'Open Notification Center',
@@ -96,9 +106,45 @@ export const OVERVIEW_EVENTS = {
     action: 'Click on SEP5 allocation button',
     category: OVERVIEW_CATEGORY,
   },
+  // Track clicks on links to Safe Accounts
+  OPEN_SAFE: {
+    action: 'Open Safe',
+    category: OVERVIEW_CATEGORY,
+    //label: OPEN_SAFE_LABELS
+  },
+  // Track actual Safe views
   SAFE_VIEWED: {
-    event: EventType.META,
+    event: EventType.SAFE_OPENED,
     action: 'Safe viewed',
     category: OVERVIEW_CATEGORY,
   },
+  BUY_CRYPTO_BUTTON: {
+    action: 'Buy crypto button',
+    category: OVERVIEW_CATEGORY,
+  },
+  SHOW_MORE_SAFES: {
+    action: 'Show more Safes',
+    category: OVERVIEW_CATEGORY,
+  },
+  CREATE_NEW_SAFE: {
+    action: 'Create new Safe',
+    category: OVERVIEW_CATEGORY,
+  },
+  PROCEED_WITH_TX: {
+    event: EventType.CLICK,
+    action: 'Proceed with transaction',
+    category: OVERVIEW_CATEGORY,
+  },
+}
+
+export enum OPEN_SAFE_LABELS {
+  sidebar = 'sidebar',
+  after_create = 'after_create',
+  after_add = 'after_add',
+  login_page = 'login_page',
+}
+
+export enum OVERVIEW_LABELS {
+  sidebar = 'sidebar',
+  login_page = 'login_page',
 }

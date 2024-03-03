@@ -8,6 +8,11 @@ export const CREATE_SAFE_EVENTS = {
     category: CREATE_SAFE_CATEGORY,
     event: EventType.META,
   },
+  CONTINUE_TO_MY_ACCOUNTS: {
+    action: 'Continue to my accounts',
+    category: CREATE_SAFE_CATEGORY,
+    event: EventType.META,
+  },
   OPEN_SAFE_CREATION: {
     action: 'Open stepper',
     category: CREATE_SAFE_CATEGORY,
@@ -52,16 +57,17 @@ export const CREATE_SAFE_EVENTS = {
     category: CREATE_SAFE_CATEGORY,
   },
   CREATED_SAFE: {
-    event: EventType.META,
+    event: EventType.SAFE_CREATED,
     action: 'Created Safe',
+    category: CREATE_SAFE_CATEGORY,
+  },
+  ACTIVATED_SAFE: {
+    event: EventType.SAFE_ACTIVATED,
+    action: 'Activated Safe',
     category: CREATE_SAFE_CATEGORY,
   },
   GET_STARTED: {
     action: 'Load Safe',
-    category: CREATE_SAFE_CATEGORY,
-  },
-  GO_TO_SAFE: {
-    action: 'Open Safe',
     category: CREATE_SAFE_CATEGORY,
   },
   OPEN_HINT: {
@@ -90,10 +96,6 @@ export const LOAD_SAFE_EVENTS = {
   THRESHOLD: {
     event: EventType.META,
     action: 'Threshold',
-    category: LOAD_SAFE_CATEGORY,
-  },
-  GO_TO_SAFE: {
-    action: 'Open Safe',
     category: LOAD_SAFE_CATEGORY,
   },
 }

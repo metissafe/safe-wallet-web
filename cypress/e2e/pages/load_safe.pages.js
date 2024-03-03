@@ -1,19 +1,50 @@
 import * as constants from '../../support/constants'
+import * as sidebar from '../pages/sidebar.pages'
+import * as main from '../pages/main.page'
 
 const addExistingAccountBtnStr = 'Add existing one'
-const contactStr = 'Name, address & network'
-const invalidAddressFormatErrorMsg = 'Invalid address format'
+const contactStr = 'Choose address, network and a name'
+export const invalidAddressFormatErrorMsg = 'Invalid address format'
+const invalidAddressNameLengthErrorMsg = 'Maximum 50 symbols'
 
 const safeDataForm = '[data-testid=load-safe-form]'
 const nameInput = 'input[name="name"]'
 const addressInput = 'input[name="address"]'
-const sideBarIcon = '[data-testid=ChevronRightIcon]'
-const sidebarCheckIcon = '[data-testid=CheckIcon]'
+const sideBarIcon = '[data-testid="ChevronRightIcon"]'
+const sidebarCheckIcon = '[data-testid="CheckIcon"]'
+const addressStepNextBtn = '[data-testid="load-safe-next-btn"]'
+const typeFile = '[type="file"]'
+const ownerName = '[data-testid="owner-name"]'
+const addressSection = '[data-testid="address-section"]'
 const nextBtnStr = 'Next'
 const addBtnStr = 'Add'
 const settingsBtnStr = 'Settings'
 const ownersConfirmationsStr = 'Owners and confirmations'
 const transactionStr = 'Transactions'
+const qrErrorMsg = 'The QR could not be read'
+const safeAddressError = 'Address given is not a valid Safe Account address'
+
+const mandatoryNetworks = [constants.networks.sepolia, constants.networks.polygon, constants.networks.ethereum]
+
+export function verifyAddressError() {
+  cy.get(addressSection).find('label').contains(safeAddressError)
+}
+
+export function verifyOnwerInputIsNotEmpty() {
+  cy.get(ownerName).find('input').invoke('attr', 'placeholder').should('not.be.empty')
+}
+
+export function checkMainNetworkSelected(network) {
+  cy.get(sidebar.chainLogo).eq(0).contains(network).should('be.visible')
+}
+
+export function verifyMandatoryNetworksExist() {
+  main.verifyValuesExist('ul li', mandatoryNetworks)
+}
+
+export function verifyQRCodeErrorMsg() {
+  cy.contains(qrErrorMsg).should('be.visible')
+}
 
 export function openLoadSafeForm() {
   cy.contains('a', addExistingAccountBtnStr).click()
@@ -52,14 +83,18 @@ export function verifyIncorrectAddressErrorMessage() {
   cy.get(addressInput).parent().prev('label').contains(invalidAddressFormatErrorMsg)
 }
 
+export function verifyNameLengthErrorMessage() {
+  cy.get(nameInput).parent().prev('label').contains(invalidAddressNameLengthErrorMsg)
+}
+
 export function inputAddress(address) {
   cy.get(addressInput).clear().type(address)
 }
 
-export function verifyAddressInputValue() {
+export function verifyAddressInputValue(safeAddress) {
   // The address field should be filled with the "bare" QR code's address
-  const [, address] = constants.SEPOLIA_TEST_SAFE_1.split(':')
-  cy.get('input[name="address"]').should('have.value', address)
+  const [, address] = safeAddress.split(':')
+  cy.get(addressInput).should('have.value', address)
 }
 
 export function clickOnNextBtn() {
@@ -118,4 +153,8 @@ export function verifyTransactionSectionIsVisible() {
 
 export function verifyNumberOfTransactions(startNumber, endNumber) {
   cy.get(`span:contains("${startNumber} out of ${endNumber}")`).should('have.length', 1)
+}
+
+export function verifyNextButtonStatus(param) {
+  cy.get(addressStepNextBtn).should(param)
 }

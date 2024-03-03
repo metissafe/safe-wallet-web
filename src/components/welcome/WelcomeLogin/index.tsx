@@ -1,15 +1,17 @@
 import { AppRoutes } from '@/config/routes'
 import { useHasFeature } from '@/hooks/useChains'
 import { FEATURES } from '@/utils/chains'
-import { Paper, SvgIcon, Typography, Divider, Link, Box, Skeleton } from '@mui/material'
+import { Paper, SvgIcon, Typography, Divider, Box, Skeleton } from '@mui/material'
 import SafeLogo from '@/public/images/logo-text.svg'
 import dynamic from 'next/dynamic'
 import css from './styles.module.css'
 import { useRouter } from 'next/router'
-import WalletLogin from './WalletLogin'
-import { LOAD_SAFE_EVENTS, CREATE_SAFE_EVENTS } from '@/services/analytics/events/createLoadSafe'
-import Track from '@/components/common/Track'
+import { CREATE_SAFE_EVENTS } from '@/services/analytics/events/createLoadSafe'
 import { trackEvent } from '@/services/analytics'
+import useWallet from '@/hooks/wallets/useWallet'
+import { useHasSafes } from '../MyAccounts/useAllSafes'
+import { useEffect } from 'react'
+import ConnectWalletButton from '@/components/common/ConnectWallet/ConnectWalletButton'
 
 const SocialSigner = dynamic(() => import('@/components/common/SocialSigner'), {
   loading: () => <Skeleton variant="rounded" height={42} width="100%" />,
@@ -17,24 +19,37 @@ const SocialSigner = dynamic(() => import('@/components/common/SocialSigner'), {
 
 const WelcomeLogin = () => {
   const router = useRouter()
+  const wallet = useWallet()
   const isSocialLoginEnabled = useHasFeature(FEATURES.SOCIAL_LOGIN)
+  const { isLoaded, hasSafes } = useHasSafes()
 
-  const continueToCreation = () => {
-    trackEvent(CREATE_SAFE_EVENTS.OPEN_SAFE_CREATION)
-    router.push({ pathname: AppRoutes.newSafe.create, query: router.query })
-  }
+  useEffect(() => {
+    if (wallet && isLoaded) {
+      if (hasSafes) {
+        router.push({ pathname: AppRoutes.welcome.accounts, query: router.query })
+      } else {
+        trackEvent(CREATE_SAFE_EVENTS.OPEN_SAFE_CREATION)
+        router.push({ pathname: AppRoutes.newSafe.create, query: router.query })
+      }
+    }
+  }, [hasSafes, isLoaded, router, wallet])
 
   return (
     <Paper className={css.loginCard} data-testid="welcome-login">
       <Box className={css.loginContent}>
-        <SvgIcon component={SafeLogo} inheritViewBox sx={{ height: '24px', width: '80px' }} />
+        <SvgIcon component={SafeLogo} inheritViewBox sx={{ height: '24px', width: '80px', ml: '-8px' }} />
+
         <Typography variant="h6" mt={6} fontWeight={700}>
-          Create Account
+          Get started
         </Typography>
+
         <Typography mb={2} textAlign="center">
-          Choose how you would like to create your Safe Account
+          {wallet
+            ? 'Open your existing Safe Accounts or create a new one'
+            : 'Connect your wallet to create a new Safe Account or open an existing one'}
         </Typography>
-        <WalletLogin onLogin={continueToCreation} />
+
+        <ConnectWalletButton text="Connect wallet" />
 
         {isSocialLoginEnabled && (
           <>
@@ -44,18 +59,9 @@ const WelcomeLogin = () => {
               </Typography>
             </Divider>
 
-            <SocialSigner onLogin={continueToCreation} />
+            <SocialSigner />
           </>
         )}
-
-        <Typography mt={2} textAlign="center">
-          Already have a Safe Account?
-        </Typography>
-        <Track {...LOAD_SAFE_EVENTS.LOAD_BUTTON}>
-          <Link color="primary" href={AppRoutes.newSafe.load}>
-            Add existing one
-          </Link>
-        </Track>
       </Box>
     </Paper>
   )

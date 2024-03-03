@@ -2,8 +2,8 @@ import * as constants from '../../support/constants'
 import * as main from '../pages/main.page'
 import * as createWallet from '../pages/create_wallet.pages'
 import * as navigation from '../pages/navigation.page'
+import * as addressBook from '../pages/address_book.page'
 
-const copyToClipboardBtn = 'button[aria-label="Copy to clipboard"]'
 const tooltipLabel = (label) => `span[aria-label="${label}"]`
 const removeOwnerBtn = 'span[data-track="settings: Remove owner"] > span > button'
 const replaceOwnerBtn = 'span[data-track="settings: Replace owner"] > span > button'
@@ -24,6 +24,8 @@ const singleOwnerNameInput = 'input[name="name"]'
 const finishTransactionBtn = '[data-testid="finish-transaction-btn"]'
 const addOwnerBtn = '[data-testid="add-owner-btn"]'
 const addOwnerNextBtn = '[data-testid="add-owner-next-btn"]'
+const modalHeader = '[data-testid="modal-header"]'
+const addressToBeRemoved = '[aria-label="Copy to clipboard"] span'
 
 const disconnectBtnStr = 'Disconnect'
 const notConnectedStatus = 'Connect'
@@ -88,8 +90,7 @@ export function getThresholdOptions() {
 export function verifyThresholdLimit(startValue, endValue) {
   cy.get('p').contains(`out of ${endValue} owner(s)`)
   clickOnThresholdDropdown()
-  getThresholdOptions().eq(0).should('have.text', startValue)
-  cy.get('body').click()
+  getThresholdOptions().eq(0).should('have.text', startValue).click()
 }
 
 export function verifyRemoveBtnIsEnabled() {
@@ -106,15 +107,28 @@ export function hoverOverDeleteOwnerBtn(index) {
 
 export function openRemoveOwnerWindow(btn) {
   cy.get(removeOwnerBtn).eq(btn).click({ force: true })
-  cy.get(copyToClipboardBtn).parent().eq(2).find('span').contains('0x').should('be.visible')
   cy.get('div').contains(removeOwnerStr).should('exist')
+}
+
+export function getAddressToBeRemoved() {
+  let removedAddress
+  cy.get(modalHeader)
+    .next()
+    .should('exist')
+    .find(addressToBeRemoved)
+    .first()
+    .invoke('text')
+    .then((value) => {
+      removedAddress = value
+      cy.wrap(removedAddress).as('removedAddress')
+    })
+  return removedAddress
 }
 
 export function openReplaceOwnerWindow() {
   cy.get(replaceOwnerBtn).click({ force: true })
   cy.get(newOwnerName).should('be.visible')
   cy.get(newOwnerAddress).should('be.visible')
-  cy.get(copyToClipboardBtn).parent().eq(2).find('span').contains('0x').should('be.visible')
 }
 export function verifyTooltipLabel(label) {
   cy.get(tooltipLabel(label)).should('be.visible')
@@ -185,8 +199,13 @@ export function verifyValidWalletName(errorMsg) {
 }
 
 export function typeOwnerAddress(address) {
-  cy.get(newOwnerAddress).clear().type(address)
-  main.verifyInputValue(newOwnerAddress, address.substring(4))
+  cy.get(newOwnerAddress)
+    .clear()
+    .type(address)
+    .then(($input) => {
+      const typedValue = $input.val()
+      expect(address).to.contain(typedValue)
+    })
   cy.wait(1000)
 }
 
@@ -200,7 +219,7 @@ export function selectNewOwner(name) {
 }
 
 export function verifyNewOwnerName(name) {
-  cy.get(newOwnerName).should('have.attr', 'placeholder', name)
+  cy.get(addressBook.addressBookRecipient).should('include.text', name)
 }
 
 export function clickOnNextBtn() {

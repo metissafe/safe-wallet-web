@@ -15,10 +15,6 @@ export const MODALS_EVENTS = {
     action: 'Contract interaction',
     category: MODALS_CATEGORY,
   },
-  SCAN_QR: {
-    action: 'Scan QR',
-    category: MODALS_CATEGORY,
-  },
   TX_DETAILS: {
     action: 'Transaction details',
     category: MODALS_CATEGORY,
@@ -57,4 +53,9 @@ export const MODALS_EVENTS = {
     category: MODALS_CATEGORY,
     event: EventType.META,
   },
+}
+
+export enum MODAL_NAVIGATION {
+  Next = 'Next click',
+  Back = 'Back click',
 }

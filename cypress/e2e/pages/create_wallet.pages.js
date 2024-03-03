@@ -10,7 +10,8 @@ const ownerAddress = 'input[name^="owners"][name$="address"]'
 const thresholdInput = 'input[name="threshold"]'
 export const removeOwnerBtn = 'button[aria-label="Remove owner"]'
 const connectingContainer = 'div[class*="connecting-container"]'
-const createNewSafeBtn = 'span[data-track="create-safe: Continue to creation"]'
+const createNewSafeBtn = '[data-testid="create-safe-btn"]'
+const continueWithWalletBtn = 'span[data-track="create-safe: Continue to my accounts"]'
 const connectWalletBtn = 'Connect wallet'
 const googleConnectBtn = '[data-testid="google-connect-btn"]'
 const googleSignedinBtn = '[data-testid="signed-in-account-btn"]'
@@ -31,7 +32,7 @@ const changeNetworkWarningStr = 'Change your wallet network'
 const safeAccountSetupStr = 'Safe Account setup'
 const policy1_2 = '1/1 policy'
 export const walletName = 'test1-sepolia-safe'
-export const defaltSepoliaPlaceholder = 'Sepolia Safe'
+export const defaultSepoliaPlaceholder = 'Sepolia Safe'
 const welcomeToSafeStr = 'Welcome to Safe'
 
 export function clickOnBackBtn() {
@@ -110,6 +111,10 @@ export function clickOnCreateNewSafeBtn() {
   cy.get(createNewSafeBtn).click().wait(1000)
 }
 
+export function clickOnContinueWithWalletBtn() {
+  cy.get(continueWithWalletBtn).click().wait(1000)
+}
+
 export function clickOnConnectWalletBtn() {
   cy.get(welcomeLoginScreen).within(() => {
     cy.get('button').contains(connectWalletBtn).should('be.visible').should('be.enabled').click().wait(1000)
@@ -124,12 +129,12 @@ export function clearWalletName() {
   cy.get(nameInput).clear()
 }
 
-export function selectNetwork(network, regex = false) {
+export function selectNetwork(network) {
   cy.wait(1000)
   cy.get(expandMoreIcon).eq(1).parents('div').eq(1).click()
   cy.wait(1000)
-  cy.get('li').contains(network).click()
-  cy.get('body').click()
+  let regex = new RegExp(`^${network}$`)
+  cy.get('li').contains(regex).click()
 }
 
 export function clickOnNextBtn() {

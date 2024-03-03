@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { type EIP1193Provider, type WalletState, type OnboardAPI } from '@web3-onboard/core'
+import { type WalletState, type OnboardAPI } from '@web3-onboard/core'
 import { type ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
-import { getAddress } from 'ethers/lib/utils'
+import type { Eip1193Provider } from 'ethers'
+import { getAddress } from 'ethers'
 import useChains, { useCurrentChain } from '@/hooks/useChains'
 import ExternalStore from '@/services/ExternalStore'
 import { logError, Errors } from '@/services/exceptions'
@@ -10,6 +11,9 @@ import { useAppSelector } from '@/store'
 import { type EnvState, selectRpc } from '@/store/settingsSlice'
 import { E2E_WALLET_NAME } from '@/tests/e2e-wallet'
 import { ONBOARD_MPC_MODULE_LABEL } from '@/services/mpc/SocialLoginModule'
+import { formatAmount } from '@/utils/formatNumber'
+import { localItem } from '@/services/local-storage/local'
+import { isWalletUnlocked } from '@/utils/wallets'
 
 const WALLETCONNECT = 'WalletConnect'
 
@@ -18,8 +22,9 @@ export type ConnectedWallet = {
   chainId: string
   address: string
   ens?: string
-  provider: EIP1193Provider
+  provider: Eip1193Provider
   icon?: string
+  balance?: string
 }
 
 const { getStore, setStore, useStore } = new ExternalStore<OnboardAPI>()
@@ -45,6 +50,20 @@ export const getConnectedWallet = (wallets: WalletState[]): ConnectedWallet | nu
   const account = primaryWallet.accounts[0]
   if (!account) return null
 
+  let balance = ''
+  if (account.balance) {
+    const tokenBalance = Object.entries(account.balance)[0]
+    const token = tokenBalance?.[0] || ''
+    const balanceString = tokenBalance?.[1] || ''
+    const balanceNumber = parseFloat(balanceString)
+    if (Number.isNaN(balanceNumber)) {
+      balance = balanceString
+    } else {
+      const balanceFormatted = formatAmount(balanceNumber)
+      balance = `${balanceFormatted} ${token}`
+    }
+  }
+
   try {
     const address = getAddress(account.address)
     return {
@@ -54,6 +73,7 @@ export const getConnectedWallet = (wallets: WalletState[]): ConnectedWallet | nu
       chainId: Number(primaryWallet.chains[0].id).toString(10),
       provider: primaryWallet.provider,
       icon: primaryWallet.icon,
+      balance,
     }
   } catch (e) {
     logError(Errors._106, e)
@@ -86,23 +106,18 @@ const trackWalletType = (wallet: ConnectedWallet) => {
     .catch(() => null)
 }
 
-// Detect mobile devices
-const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-
-// Detect injected wallet
-const hasInjectedWallet = () => typeof window !== 'undefined' && !!window?.ethereum
+let isConnecting = false
 
 // Wrapper that tracks/sets the last used wallet
 export const connectWallet = async (
   onboard: OnboardAPI,
   options?: Parameters<OnboardAPI['connectWallet']>[0],
 ): Promise<WalletState[] | undefined> => {
-  // On mobile, automatically choose WalletConnect if there is no injected wallet
-  if (!options && isMobile() && !hasInjectedWallet()) {
-    options = {
-      autoSelect: WALLETCONNECT,
-    }
+  if (isConnecting) {
+    return
   }
+
+  isConnecting = true
 
   let wallets: WalletState[] | undefined
 
@@ -110,8 +125,12 @@ export const connectWallet = async (
     wallets = await onboard.connectWallet(options)
   } catch (e) {
     logError(Errors._302, e)
+    isConnecting = false
+
     return
   }
+
+  isConnecting = false
 
   return wallets
 }
@@ -129,6 +148,25 @@ export const switchWallet = async (onboard: OnboardAPI) => {
   if (newWalletLabel !== oldWalletLabel) {
     await onboard.disconnectWallet({ label: oldWalletLabel })
   }
+}
+
+const lastWalletStorage = localItem<string>('lastWallet')
+
+const connectLastWallet = async (onboard: OnboardAPI) => {
+  const lastWalletLabel = lastWalletStorage.get()
+  if (lastWalletLabel) {
+    const isUnlocked = await isWalletUnlocked(lastWalletLabel)
+
+    if (isUnlocked === true || isUnlocked === undefined) {
+      connectWallet(onboard, {
+        autoSelect: { label: lastWalletLabel, disableModals: isUnlocked || false },
+      })
+    }
+  }
+}
+
+const saveLastWallet = (walletLabel: string) => {
+  lastWalletStorage.set(walletLabel)
 }
 
 // Disable/enable wallets according to chain
@@ -161,6 +199,9 @@ export const useInitOnboard = () => {
           autoSelect: { label: E2E_WALLET_NAME, disableModals: true },
         })
       }
+
+      // Reconnect last wallet
+      connectLastWallet(onboard)
     })
   }, [chain, onboard])
 
@@ -174,10 +215,12 @@ export const useInitOnboard = () => {
       if (newWallet) {
         if (newWallet.label !== lastConnectedWallet) {
           lastConnectedWallet = newWallet.label
+          saveLastWallet(lastConnectedWallet)
           trackWalletType(newWallet)
         }
-      } else {
+      } else if (lastConnectedWallet) {
         lastConnectedWallet = ''
+        saveLastWallet(lastConnectedWallet)
       }
     })
 

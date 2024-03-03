@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { BigNumber } from 'ethers'
 import { useRouter } from 'next/router'
 
 import { RpcErrorCode } from '.'
@@ -7,19 +6,19 @@ import type { AppInfo, WalletSDK } from '.'
 import { SafeWalletProvider } from '.'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { TxModalContext } from '@/components/tx-flow'
-import SignMessageFlow from '@/components/tx-flow/flows/SignMessage'
+import { SignMessageFlow } from '@/components/tx-flow/flows'
 import { safeMsgSubscribe, SafeMsgEvent } from '@/services/safe-messages/safeMsgEvents'
-import SafeAppsTxFlow from '@/components/tx-flow/flows/SafeAppsTx'
+import { SafeAppsTxFlow } from '@/components/tx-flow/flows'
 import { TxEvent, txSubscribe } from '@/services/tx/txEvents'
 import { Methods } from '@safe-global/safe-apps-sdk'
 import type { EIP712TypedData, SafeSettings } from '@safe-global/safe-apps-sdk'
 import { useWeb3ReadOnly } from '@/hooks/wallets/web3'
 import { getTransactionDetails } from '@safe-global/safe-gateway-typescript-sdk'
-import { getAddress } from 'ethers/lib/utils'
+import { getAddress } from 'ethers'
 import { AppRoutes } from '@/config/routes'
 import useChains, { useCurrentChain } from '@/hooks/useChains'
 import { NotificationMessages, showNotification } from './notifications'
-import SignMessageOnChainFlow from '@/components/tx-flow/flows/SignMessageOnChain'
+import { SignMessageOnChainFlow } from '@/components/tx-flow/flows'
 import { useAppSelector } from '@/store'
 import { selectOnChainSigning } from '@/store/settingsSlice'
 import { isOffchainEIP1271Supported } from '@/utils/safe-messages'
@@ -117,7 +116,7 @@ export const _useTxFlowApi = (chainId: string, safeAddress: string): WalletSDK |
         const transactions = params.txs.map(({ to, value, data }) => {
           return {
             to: getAddress(to),
-            value: BigNumber.from(value).toString(),
+            value: BigInt(value).toString(),
             data,
           }
         })
@@ -182,6 +181,16 @@ export const _useTxFlowApi = (chainId: string, safeAddress: string): WalletSDK |
         return null
       },
 
+      async showTxStatus(safeTxHash) {
+        router.push({
+          pathname: AppRoutes.transactions.tx,
+          query: {
+            safe: router.query.safe,
+            id: safeTxHash,
+          },
+        })
+      },
+
       setSafeSettings(newSettings) {
         const res = {
           ...settings,
@@ -194,8 +203,7 @@ export const _useTxFlowApi = (chainId: string, safeAddress: string): WalletSDK |
       },
 
       async proxy(method, params) {
-        const data = await web3ReadOnly?.send(method, params)
-        return data.result
+        return web3ReadOnly?.send(method, params)
       },
     }
   }, [chainId, safeAddress, safe, currentChain, onChainSigning, settings, setTxFlow, configs, router, web3ReadOnly])

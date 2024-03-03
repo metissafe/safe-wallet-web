@@ -2,9 +2,9 @@ import useConnectWallet from '@/components/common/ConnectWallet/useConnectWallet
 import Track from '@/components/common/Track'
 import useWallet from '@/hooks/wallets/useWallet'
 import { isSocialLoginWallet } from '@/services/mpc/SocialLoginModule'
-import { CREATE_SAFE_EVENTS } from '@/services/analytics'
 import { Box, Button, Typography } from '@mui/material'
-import { EthHashInfo } from '@safe-global/safe-react-components'
+import EthHashInfo from '@/components/common/EthHashInfo'
+import { CREATE_SAFE_EVENTS } from '@/services/analytics'
 
 const WalletLogin = ({ onLogin }: { onLogin: () => void }) => {
   const wallet = useWallet()
@@ -15,7 +15,7 @@ const WalletLogin = ({ onLogin }: { onLogin: () => void }) => {
   if (wallet !== null && !isSocialLogin) {
     return (
       <Box sx={{ width: '100%' }}>
-        <Track {...CREATE_SAFE_EVENTS.CONTINUE_TO_CREATION}>
+        <Track {...CREATE_SAFE_EVENTS.CONTINUE_TO_MY_ACCOUNTS}>
           <Button variant="contained" sx={{ padding: '8px 16px' }} fullWidth onClick={onLogin}>
             <Box
               width="100%"
@@ -29,7 +29,15 @@ const WalletLogin = ({ onLogin }: { onLogin: () => void }) => {
                 <Typography variant="subtitle2" fontWeight={700}>
                   Continue with {wallet.label}
                 </Typography>
-                {wallet.address && <EthHashInfo address={wallet.address} shortAddress avatarSize={16} />}
+                {wallet.address && (
+                  <EthHashInfo
+                    address={wallet.address}
+                    shortAddress
+                    avatarSize={16}
+                    showName={false}
+                    copyAddress={false}
+                  />
+                )}
               </Box>
               {wallet.icon && (
                 <img

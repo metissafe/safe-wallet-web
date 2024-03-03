@@ -26,7 +26,6 @@ export const AppRoutes = {
     create: '/new-safe/create',
   },
   settings: {
-    spendingLimits: '/settings/spending-limits',
     setup: '/settings/setup',
     securityLogin: '/settings/security-login',
     notifications: '/settings/notifications',
@@ -53,5 +52,6 @@ export const AppRoutes = {
   welcome: {
     socialLogin: '/welcome/social-login',
     index: '/welcome',
+    accounts: '/welcome/accounts',
   },
 }
